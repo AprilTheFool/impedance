@@ -1,6 +1,8 @@
+Camera3D
+Node3D
+StaticBody3D
 MeshInstance3D
 RigidBody3D
 CollisionShape3D
 CharacterBody3D
-Camera3D
 AnimationPlayer
