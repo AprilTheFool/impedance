@@ -1,6 +1,9 @@
+WorldEnvironment
+SpringArm3D
+StaticBody3D
+OmniLight3D
 Camera3D
 Node3D
-StaticBody3D
 MeshInstance3D
 RigidBody3D
 CollisionShape3D

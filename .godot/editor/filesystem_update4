@@ -1,7 +1,4 @@
-res://assets/staticmesh/playground_BézierCurve_005.res
-res://test_scene.tscn
-res://sophia_skin/sophia_skin.tscn
-res://Player3D.tscn
 res://Player3D/Player3D.tscn
-res://Player3D/player_3d.gd
+res://test_scene.tscn
 res://Player3D/sophia_skin/sophia_skin.tscn
+res://Player3D/player_3d.gd
