@@ -1,7 +1,7 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1748513245
+::res://::1748515718
+bigboonda.tscn::PackedScene::6884169797311914757::1748515071::0::1::::<><><>0<>0<><>::
 icon.svg::CompressedTexture2D/CompressedTexture2D::2031008883844284088::1748509076::1748509096::1::::<><><>0<>0<>7f58da974299bc4b945ad9735e7e0cc1<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
-penr.tscn::PackedScene/PackedScene::6607396289975726248::1748511900::0::1::::<><><>0<>0<><>::
 README.md::TextFile/TextFile::-1::1748510615::0::1::::<><><>0<>0<><>::
 ::res://addons/::1748509237
 ::res://addons/godot-git-plugin/::1748509239
@@ -10,4 +10,13 @@ plugin.cfg::TextFile/TextFile::-1::1712608203::0::1::::<><><>0<>0<><>::
 THIRDPARTY.md::TextFile/TextFile::-1::1712608203::0::1::::<><><>0<>0<><>::
 ::res://addons/godot-git-plugin/linux/::1748509237
 ::res://addons/godot-git-plugin/macos/::1748509237
-::res://addons/godot-git-plugin/win64/::1748513238
+::res://addons/godot-git-plugin/win64/::1748515711
+::res://FPSController/::1748515688
+FPSController.gd::GDScript::1786466191758502257::1748504213::0::1::::<>CharacterBody3D<><>0<>0<><>::
+FPSController.tscn::PackedScene::8668103836671946748::1748515588::0::1::::<><><>0<>0<><>::uid://0pm3p1hp0qij::::res://FPSController/FPSController.gd<>uid://r0ojrmmniivb::::res://FPSController/weapon_manager/weapon_manager.tscn<>uid://dx5xwlpjrvqvu::::res://models/weapons/knife/knife.glb<>uid://cd3u5mq4ol4y4::::res://models/weapons/revolver/gunMetal.tres<>uid://cb0h5odsr2apr::::res://models/weapons/revolver/gunWood.tres<>uid://bomcb5gbt5mq3::::res://models/weapons/revolver/flesh.tres<>uid://5kixuqvviwa8::::res://models/weapons/revolver/eyeball.tres
+::res://FPSController/weapon_manager/::1748515688
+weapon_manager.gd::GDScript::1443728093828983810::1740371550::0::1::::WeaponManager<>Node3D<><>0<>0<><>::
+weapon_manager.tscn::PackedScene::1245686807739446779::1748515587::0::1::::<><><>0<>0<><>::uid://utl8xlnbah1c::::res://FPSController/weapon_manager/weapon_manager.gd
+weapon_resource.gd::GDScript::900239305089933225::1740371327::0::1::::WeaponResource<>Resource<><>0<>0<><>::
+::res://FPSController/weapon_manager/deagle/::1748515688
+deagle.tres::Resource/WeaponResource::2159525144409675748::1748515587::0::1::::<><><>0<>0<><>::uid://m3c2sfquwt2x::::res://FPSController/weapon_manager/weapon_resource.gd
