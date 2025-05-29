@@ -1,7 +1,7 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1748526873
+::res://::1748527322
 icon.svg::CompressedTexture2D/CompressedTexture2D::2031008883844284088::1748526816::1748526837::1::::<><><>0<>0<>7f58da974299bc4b945ad9735e7e0cc1<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
-Player3D.tscn::PackedScene::5988501750346869698::1748526856::0::1::::<><><>0<>0<><>::uid://prh35jb6tjtd::::res://sophia_skin/sophia_skin.tscn
+Player3D.tscn::PackedScene::5988501750346869698::1748527322::0::1::::<><><>0<>0<><>::uid://prh35jb6tjtd::::res://sophia_skin/sophia_skin.tscn<>uid://cswbdnxq4auu8::::res://assets/staticmesh/playground.gltf
 README.md::TextFile::-1::1748526816::0::1::::<><><>0<>0<><>::
 test_scene.tscn::PackedScene::4870206992088490825::1748526816::0::1::::<><><>0<>0<><>::uid://6l0gav5g7bcp::::res://TPS.tscn
 ::res://addons/::1748526816
@@ -13,8 +13,8 @@ THIRDPARTY.md::TextFile::-1::1748526816::0::1::::<><><>0<>0<><>::
 ::res://addons/godot-git-plugin/macos/::1748526816
 ::res://addons/godot-git-plugin/win64/::1748526832
 ::res://assets/::1748526879
-::res://assets/staticmesh/::1748527088
-playground.gltf::PackedScene::6081723656934379049::1748527088::1748527090::1::::<><><>0<>0<>7e0764bb6f77e9be16f0b1c222d3d2dc<>res://.godot/imported/playground.gltf-19161ca0a1f4fedc5d3dab8254523d79.scn::
+::res://assets/staticmesh/::1748527733
+playground.glb::PackedScene::288581110681626237::1748527733::1748527737::1::::<><><>0<>0<>85c249bae18438390eda525810441391<>res://.godot/imported/playground.glb-91af0298ad331b10d12c163aabeb0341.scn::
 ::res://sophia_skin/::1748526816
 sophia_skin.gd::GDScript::751809934982672101::1748526816::0::1::::SophiaSkin<>Node3D<><>0<>0<><>::
 sophia_skin.tscn::PackedScene::1088403687259568021::1748526816::0::1::::<><><>0<>0<><>::uid://16iu10wxub40::::res://sophia_skin/model/sophia.glb<>uid://kygg17qm1nt2::::res://sophia_skin/sophia_skin.gd<>uid://dye01l0ct4fby::::res://sophia_skin/model/materials/eye_mat_override.tres
