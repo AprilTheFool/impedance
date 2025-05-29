@@ -1,1 +1,9 @@
+<<<<<<< HEAD
+=======
+README.md
+addons/godot-git-plugin/THIRDPARTY.md
+addons/godot-git-plugin/git_plugin.gdextension
+addons/godot-git-plugin/plugin.cfg
+bigboonda.tscn
+>>>>>>> f508b4546d5b2a228f5b9789809c5f6c0fd5d61f
 res://bigboonda.tscn
