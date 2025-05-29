@@ -1,4 +1,6 @@
 CollisionShape3D
+CharacterBody3D
+Camera3D
 MeshInstance3D
 RigidBody3D
 AnimationPlayer
