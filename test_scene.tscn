@@ -1,8 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://cbnfuk3urcqsf"]
 
-[ext_resource type="PackedScene" uid="uid://ed15hmw3dutp" path="res://assets/staticmesh/playground.glb" id="1_uhqqe"]
+[ext_resource type="ArrayMesh" uid="uid://b3v1dnv75eqgl" path="res://assets/staticmesh/playground_BézierCurve_005.res" id="1_uhqqe"]
 
 [node name="TestScene" type="Node3D"]
 
-[node name="playground" parent="." instance=ExtResource("1_uhqqe")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.962, 0, -2.25235)
+[node name="PlaygroundBézierCurve005" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.6014, 33.024, 65.38)
+mesh = ExtResource("1_uhqqe")
