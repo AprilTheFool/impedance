@@ -1,22 +1,3 @@
-[gd_scene load_steps=4 format=3 uid="uid://c5c0jhaojs422"]
-
-[ext_resource type="PackedScene" uid="uid://dvq5ny0suemg7" path="res://FPSController/FPSController.tscn" id="1_f7jf0"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_f7jf0"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_f7jf0"]
-size = Vector3(7.4563, 0.733521, 6.22229)
+[gd_scene format=3 uid="uid://c5c0jhaojs422"]
 
 [node name="Node3D" type="Node3D"]
-
-[node name="CharacterBody3D" parent="." instance=ExtResource("1_f7jf0")]
-
-[node name="RigidBody3D" type="RigidBody3D" parent="."]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
-transform = Transform3D(6.23659, 0, 0, 0, -0.14639, 0, 0, 0, 6.23659, 0, -0.751422, 0)
-mesh = SubResource("BoxMesh_f7jf0")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.660278, -1.03722, 0.0437622)
-shape = SubResource("BoxShape3D_f7jf0")

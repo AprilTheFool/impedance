@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="WeaponResource" load_steps=2 format=3 uid="uid://51dcfso3htgu"]
-
-[ext_resource type="Script" uid="uid://m3c2sfquwt2x" path="res://FPSController/weapon_manager/weapon_resource.gd" id="1_exk4m"]
-
-[resource]
-script = ExtResource("1_exk4m")
-damage = 10
