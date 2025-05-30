@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @export var look_sensitivity : float = 0.002
 @export var jump_velocity := 6.0
-@export var auto_bhop := true
+@export var auto_bhop := false
 
 @export var headbob_move_amount = 0.1
 const HEADBOB_FREQUENCY = 1
@@ -16,12 +16,16 @@ var headbob_time := 0.0
 
 var current_sprint_speed := 15.0
 @export var sprint_speed_cap := 25.0
-@export var sprint_build_up := 1.0  # how quickly speed builds up
+@export var sprint_build_up := 1.0
 
 var default_fov := 98.0
 var sprint_fov := 110.0
 var fov_speed := 4.0
 var target_fov := 75.0
+
+var current_line_density := 0.0
+var target_line_density := 0.0
+var line_transition_speed := 3.0
 
 @export var air_cap := 0.85
 @export var air_accel := 800.0
@@ -88,13 +92,13 @@ func _handle_air_physics(delta) -> void:
 		self.velocity += accel_speed * wish_dir
 
 func _handle_ground_physics(delta) -> void:
+	## fancy css style ground friction
 	var cur_speed_in_wish_dir = self.velocity.dot(wish_dir)
 	var add_speed_till_cap = get_move_speed() - cur_speed_in_wish_dir
 	if add_speed_till_cap > 0:
 		var accel_speed = ground_accel * delta * get_move_speed()
 		accel_speed = min(accel_speed, add_speed_till_cap)
 		self.velocity += accel_speed * wish_dir
-		
 	var control = max(self.velocity.length(), ground_decel)
 	var drop = control * ground_friction * delta
 	var new_speed = max(self.velocity.length() - drop, 0.0)
@@ -105,22 +109,27 @@ func _handle_ground_physics(delta) -> void:
 	_headbob_effect(delta)
 
 func _physics_process(delta):
-	## handle speed lines and fov effect at high speeds
+	## handle fov and speedlines at high speeds
 	if velocity.length() > 18:
-		$SpeedLines.material.set_shader_parameter("line_density", 0.4)
 		target_fov = sprint_fov
-	else:
-		## fallback to default fov and handle lower speed lines
+		target_line_density = 0.6
+	elif velocity.length() > 12:
 		target_fov = default_fov
-	if velocity.length() < 14:
-		$SpeedLines.material.set_shader_parameter("line_density", 0.3)
-		headbob_move_amount = 0.1
-	if velocity.length() < 8:
-		$SpeedLines.material.set_shader_parameter("line_density", 0.0)
-		headbob_move_amount = 0.06
-	## fov smooth transition
-	var current_fov = %Camera3D.fov
-	%Camera3D.fov = lerp(float(current_fov), float(target_fov), delta * fov_speed)
+		target_line_density = 0.4
+	elif velocity.length() > 8:
+		target_fov = default_fov
+		target_line_density = 0.1
+	else:
+		target_fov = default_fov
+		target_line_density = 0.0
+
+	## smooth fov transition
+	var current_fov: float = %Camera3D.fov
+	%Camera3D.fov = lerp(current_fov, target_fov, delta * fov_speed)
+
+	## smooth speed lines transition
+	current_line_density = lerp(current_line_density, target_line_density, delta * line_transition_speed)
+	$SpeedLines.material.set_shader_parameter("line_density", current_line_density)
 
 	var input_dir = Input.get_vector("left", "right", "up", "down").normalized()
 	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
@@ -133,4 +142,3 @@ func _physics_process(delta):
 		_handle_air_physics(delta)
 		
 	move_and_slide()
-	print(headbob_move_amount)
