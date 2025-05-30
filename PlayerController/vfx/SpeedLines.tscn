@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6t8xc2fwwxdl"]
+
+[ext_resource type="Shader" uid="uid://d1h5u6r58rb61" path="res://PlayerController/vfx/SpeedLines.gdshader" id="1_0amd4"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_obf0t"]
+noise_type = 5
+frequency = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qfni8"]
+noise = SubResource("FastNoiseLite_obf0t")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p2pf0"]
+shader = ExtResource("1_0amd4")
+shader_parameter/noise = SubResource("NoiseTexture2D_qfni8")
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/line_count = 2.0
+shader_parameter/line_density = 0.485
+shader_parameter/line_faloff = 1.0
+shader_parameter/mask_size = 0.0
+shader_parameter/mask_edge = 0.75
+shader_parameter/animation_speed = 19.136
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_p2pf0")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

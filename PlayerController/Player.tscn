@@ -1,10 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://sn320x0anyl4"]
+[gd_scene load_steps=8 format=3 uid="uid://sn320x0anyl4"]
 
 [ext_resource type="Script" uid="uid://cvek2q1075vpv" path="res://PlayerController/player.gd" id="1_g1nwm"]
+[ext_resource type="Shader" uid="uid://d1h5u6r58rb61" path="res://PlayerController/vfx/SpeedLines.gdshader" id="2_c4fll"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rwas"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_c4fll"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ves0u"]
+noise_type = 5
+frequency = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5i1rd"]
+noise = SubResource("FastNoiseLite_ves0u")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c7efg"]
+shader = ExtResource("2_c4fll")
+shader_parameter/noise = SubResource("NoiseTexture2D_5i1rd")
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/line_count = 2.0
+shader_parameter/line_density = 0.485
+shader_parameter/line_faloff = 1.0
+shader_parameter/mask_size = 0.0
+shader_parameter/mask_edge = 0.75
+shader_parameter/animation_speed = 19.136
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 script = ExtResource("1_g1nwm")
@@ -26,3 +45,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
 unique_name_in_owner = true
+fov = 98.0
+
+[node name="SpeedLines" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_c7efg")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

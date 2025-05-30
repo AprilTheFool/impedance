@@ -6,3 +6,6 @@ res://Player3D/sophia_skin/sophia_skin.gd
 res://Player.tscn
 res://PlayerController/Player.tscn
 res://PlayerController/player.gd
+res://PlayerController/SpeedLines.tscn
+res://PlayerController/vfx/SpeedLines.gdshader
+res://PlayerController/vfx/SpeedLines.tscn

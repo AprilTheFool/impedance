@@ -1,9 +1,8 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1748619441
+::res://::1748623915
 icon.svg::CompressedTexture2D/CompressedTexture2D::2031008883844284088::1748595685::1748595710::1::::<><><>0<>0<>7f58da974299bc4b945ad9735e7e0cc1<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 README.md::TextFile/TextFile::-1::1748595685::0::1::::<><><>0<>0<><>::
-Player.tscn::PackedScene::1291985738270933051::1748619497::0::1::::<><><>0<>0<><>::
-test_scene.tscn::PackedScene::4870206992088490825::1748617096::0::1::::<><><>0<>0<><>::uid://b3v1dnv75eqgl::::res://assets/staticmesh/playground_BézierCurve_005.res
+test_scene.tscn::PackedScene::4870206992088490825::1748623915::0::1::::<><><>0<>0<><>::uid://b3v1dnv75eqgl::::res://assets/staticmesh/playground_BézierCurve_005.res<>uid://sn320x0anyl4::::res://PlayerController/Player.tscn
 ::res://addons/::1748595685
 ::res://addons/godot-git-plugin/::1748595685
 git_plugin.gdextension::GDExtension/GDExtension::2201217187792232563::1748595685::0::1::::<><><>0<>0<><>::
@@ -16,4 +15,8 @@ THIRDPARTY.md::TextFile/TextFile::-1::1748595685::0::1::::<><><>0<>0<><>::
 ::res://assets/staticmesh/::1748595714
 playground.glb::PackedScene/PackedScene::6530007406915817166::1748595685::1748595714::1::::<><><>0<>0<>11b4f85da6d324f06646f67d04940889<>res://.godot/imported/playground.glb-91af0298ad331b10d12c163aabeb0341.scn::uid://b3v1dnv75eqgl::::res://assets/staticmesh/playground_BézierCurve_005.res
 playground_BézierCurve_005.res::ArrayMesh/ArrayMesh::4396644954325550039::1748595713::0::1::::<><><>0<>0<><>::
-::res://PlayerController/::0
+::res://PlayerController/::1748623934
+Player.tscn::PackedScene::1291985738270933051::1748623934::0::1::::<><><>0<>0<><>::uid://cvek2q1075vpv::::res://PlayerController/player.gd
+player.gd::GDScript::6255720862882587511::1748623825::0::1::::<>CharacterBody3D<><>0<>0<><>::
+SpeedLines.tscn::PackedScene::6989963578527335101::1748624089::0::1::::<><><>0<>0<><>::
+::res://PlayerController/vfx/::0
