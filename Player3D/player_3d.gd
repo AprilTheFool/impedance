@@ -12,6 +12,7 @@ extends CharacterBody3D
 @export var acceleration := 20.0
 @export var rotation_speed := 12.0
 @export var jump_impulse := 12.0
+@export var stopping_speed := 1.0
 
 var _camera_input_direction := Vector2.ZERO
 var _last_movement_direction := Vector3.BACK
@@ -53,6 +54,7 @@ func _physics_process(delta: float) -> void:
 	# get movement input key (set in project > settings > input map)
 	var raw_input := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
+	
 	# moon rune math, essentially setting a direction basis to calculate movement directions relative to the camera,
 	# similar to switching gizmo to 'local' in blender
 	var forward := _camera.global_basis.z
@@ -60,7 +62,9 @@ func _physics_process(delta: float) -> void:
 	var move_direction := forward * raw_input.y + right * raw_input.x
 	move_direction.y = 0.0
 	move_direction = move_direction.normalized()
-	
+	# prevent character from sliding by stopping the character when their velocity is below var stopping_speed
+	if is_equal_approx(move_direction.length(), 0.0) and velocity.length() < stopping_speed:
+		velocity = Vector3.ZERO
 	var y_velocity := velocity.y
 	velocity.y = 0.0
 	# calculate base horizontal velocity using move speed & acceleration * move direction
@@ -80,12 +84,17 @@ func _physics_process(delta: float) -> void:
 	var target_angle := Vector3.BACK.signed_angle_to(_last_movement_direction, Vector3.UP)
 	_skin.global_rotation.y = lerp_angle(_skin.rotation.y, target_angle, rotation_speed * delta)
 	
-	# switch between run and idle animations based on velocity
-	var ground_speed := velocity.length()
-	if ground_speed > 0.0:
-		_skin.move()
-	else:
-		_skin.idle()
+	# switch between animations
+	if is_starting_jump:
+		_skin.jump()
+	elif not is_on_floor() and velocity.y < 0:
+		_skin.fall()
+	elif is_on_floor():
+		var ground_speed := velocity.length()
+		if ground_speed > 0.0:
+			_skin.move()
+		else:
+			_skin.idle()
 	
 	
 	
