@@ -4,8 +4,8 @@ extends CharacterBody3D
 @export var jump_velocity := 6.0
 @export var auto_bhop := true
 
-const HEADBOB_MOVE_AMOUNT = 0.06
-const HEADBOB_FREQUENCY = 2.4
+@export var headbob_move_amount = 0.1
+const HEADBOB_FREQUENCY = 1
 var headbob_time := 0.0
 
 @export var walk_speed := 7.0
@@ -14,6 +14,15 @@ var headbob_time := 0.0
 @export var ground_decel := 10.0
 @export var ground_friction := 6.0
 
+var current_sprint_speed := 15.0
+@export var sprint_speed_cap := 25.0
+@export var sprint_build_up := 1.0  # how quickly speed builds up
+
+var default_fov := 98.0
+var sprint_fov := 110.0
+var fov_speed := 4.0
+var target_fov := 75.0
+
 @export var air_cap := 0.85
 @export var air_accel := 800.0
 @export var air_move_speed := 500.0
@@ -21,7 +30,18 @@ var headbob_time := 0.0
 var wish_dir := Vector3.ZERO
 
 func get_move_speed() -> float:
-	return sprint_speed if Input.is_action_pressed("sprint") else walk_speed
+	var delta := get_physics_process_delta_time()
+
+	if Input.is_action_pressed("sprint"):
+		# If we're starting to sprint from walk speed, snap immediately to base sprint speed
+		if current_sprint_speed < sprint_speed:
+			current_sprint_speed = sprint_speed
+		else:
+			current_sprint_speed = min(current_sprint_speed + sprint_build_up * delta, sprint_speed_cap)
+		return current_sprint_speed
+	else:
+		current_sprint_speed = walk_speed
+		return walk_speed
 
 func _ready():
 	## hide world model in fpv
@@ -46,8 +66,8 @@ func _unhandled_input(event):
 func _headbob_effect(delta):
 	headbob_time += delta * self.velocity.length()
 	%Camera3D.transform.origin = Vector3(
-		cos(headbob_time * HEADBOB_FREQUENCY * 0.5) * HEADBOB_MOVE_AMOUNT,
-		sin(headbob_time * HEADBOB_FREQUENCY) * HEADBOB_MOVE_AMOUNT,
+		cos(headbob_time * HEADBOB_FREQUENCY * 0.5) * headbob_move_amount,
+		sin(headbob_time * HEADBOB_FREQUENCY) * headbob_move_amount,
 		0
 	)
 
@@ -85,15 +105,22 @@ func _handle_ground_physics(delta) -> void:
 	_headbob_effect(delta)
 
 func _physics_process(delta):
-	## handle intensity of speed lines
-	if velocity.length() < 15:
+	## handle speed lines and fov effect at high speeds
+	if velocity.length() > 18:
+		$SpeedLines.material.set_shader_parameter("line_density", 0.4)
+		target_fov = sprint_fov
+	else:
+		## fallback to default fov and handle lower speed lines
+		target_fov = default_fov
+	if velocity.length() < 14:
 		$SpeedLines.material.set_shader_parameter("line_density", 0.3)
-	if velocity.length() < 10:
-		$SpeedLines.material.set_shader_parameter("line_density", 0.2)
+		headbob_move_amount = 0.1
 	if velocity.length() < 8:
-		$SpeedLines.material.set_shader_parameter("line_density", 0.1)
-	if velocity.length() < 6:
 		$SpeedLines.material.set_shader_parameter("line_density", 0.0)
+		headbob_move_amount = 0.06
+	## fov smooth transition
+	var current_fov = %Camera3D.fov
+	%Camera3D.fov = lerp(float(current_fov), float(target_fov), delta * fov_speed)
 
 	var input_dir = Input.get_vector("left", "right", "up", "down").normalized()
 	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
@@ -106,3 +133,4 @@ func _physics_process(delta):
 		_handle_air_physics(delta)
 		
 	move_and_slide()
+	print(headbob_move_amount)

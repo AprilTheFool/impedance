@@ -1,3 +1,4 @@
+WorldEnvironment
 ColorRect
 Camera3D
 Node3D
@@ -6,7 +7,6 @@ CollisionShape3D
 CharacterBody3D
 AnimationTree
 AnimationPlayer
-WorldEnvironment
 SpringArm3D
 StaticBody3D
 OmniLight3D
