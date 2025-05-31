@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cvek2q1075vpv" path="res://PlayerController/player.gd" id="1_g1nwm"]
 [ext_resource type="PackedScene" uid="uid://cofno2ovegd2i" path="res://PlayerController/rope.tscn" id="2_5i1rd"]
 [ext_resource type="Shader" uid="uid://d1h5u6r58rb61" path="res://PlayerController/vfx/SpeedLines.gdshader" id="2_c4fll"]
-[ext_resource type="Script" uid="uid://c6jylu67fdyhm" path="res://PlayerController/grapple_controller.gd" id="3_ves0u"]
+[ext_resource type="Script" path="res://PlayerController/grapple_controller.gd" id="3_ves0u"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rwas"]
 
