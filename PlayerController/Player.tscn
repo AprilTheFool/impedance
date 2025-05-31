@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://sn320x0anyl4"]
+[gd_scene load_steps=11 format=3 uid="uid://sn320x0anyl4"]
 
 [ext_resource type="Script" uid="uid://cvek2q1075vpv" path="res://PlayerController/player.gd" id="1_g1nwm"]
 [ext_resource type="PackedScene" uid="uid://cofno2ovegd2i" path="res://PlayerController/rope.tscn" id="2_5i1rd"]
 [ext_resource type="Shader" uid="uid://d1h5u6r58rb61" path="res://PlayerController/vfx/SpeedLines.gdshader" id="2_c4fll"]
-[ext_resource type="Script" path="res://PlayerController/grapple_controller.gd" id="3_ves0u"]
+[ext_resource type="Script" uid="uid://c6jylu67fdyhm" path="res://PlayerController/grapple_controller.gd" id="3_ves0u"]
+[ext_resource type="PackedScene" uid="uid://duev5ucgrmhtc" path="res://PlayerController/crosshair.tscn" id="5_c7efg"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rwas"]
 
@@ -68,3 +69,6 @@ mouse_filter = 2
 script = ExtResource("3_ves0u")
 ray = NodePath("../Head/Camera3D/RayCast3D")
 rope = NodePath("../Head/Camera3D/Rope")
+
+[node name="Control" parent="." instance=ExtResource("5_c7efg")]
+mouse_filter = 2

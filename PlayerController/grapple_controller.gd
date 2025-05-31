@@ -4,7 +4,7 @@ extends Node
 @export var rope: Node3D
 
 @export var rest_length = 2.0
-@export var stiffness = 10.0
+@export var stiffness = 5.0
 @export var damping = 1.0
 
 @onready var player: CharacterBody3D = get_parent()

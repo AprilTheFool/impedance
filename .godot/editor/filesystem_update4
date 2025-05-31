@@ -1,7 +1,5 @@
-res://test_scene.tscn
-res://PlayerController/vfx/SpeedLines.gdshader
 res://PlayerController/Player.tscn
-res://PlayerController/vfx/SpeedLines.tscn
-res://PlayerController/player.gd
+res://PlayerController/vfx/SpeedLines.gdshader
+res://test_scene.tscn
+res://PlayerController/crosshair.tscn
 res://PlayerController/rope.tscn
-res://assets/staticmesh/playground_BézierCurve_005.res
