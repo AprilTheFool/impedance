@@ -1,8 +1,10 @@
+MeshInstance3D
+Node
+RayCast3D
 WorldEnvironment
 ColorRect
 Camera3D
 Node3D
-MeshInstance3D
 CollisionShape3D
 CharacterBody3D
 AnimationTree
@@ -10,4 +12,3 @@ AnimationPlayer
 SpringArm3D
 StaticBody3D
 OmniLight3D
-RigidBody3D

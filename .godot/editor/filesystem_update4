@@ -4,3 +4,5 @@ res://PlayerController/Player.tscn
 res://PlayerController/vfx/SpeedLines.tscn
 res://assets/staticmesh/playground_BézierCurve_005.res
 res://PlayerController/player.gd
+res://PlayerController/grapple_controller.gd
+res://PlayerController/rope.tscn

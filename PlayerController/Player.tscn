@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://sn320x0anyl4"]
+[gd_scene load_steps=10 format=3 uid="uid://sn320x0anyl4"]
 
 [ext_resource type="Script" uid="uid://cvek2q1075vpv" path="res://PlayerController/player.gd" id="1_g1nwm"]
+[ext_resource type="PackedScene" uid="uid://cofno2ovegd2i" path="res://PlayerController/rope.tscn" id="2_5i1rd"]
 [ext_resource type="Shader" uid="uid://d1h5u6r58rb61" path="res://PlayerController/vfx/SpeedLines.gdshader" id="2_c4fll"]
+[ext_resource type="Script" uid="uid://c6jylu67fdyhm" path="res://PlayerController/grapple_controller.gd" id="3_ves0u"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rwas"]
 
@@ -47,6 +49,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79, 0)
 unique_name_in_owner = true
 fov = 98.0
 
+[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D"]
+target_position = Vector3(0, 0, -50)
+
+[node name="Rope" parent="Head/Camera3D" instance=ExtResource("2_5i1rd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.777337)
+
 [node name="SpeedLines" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_c7efg")
 anchors_preset = 15
@@ -55,3 +63,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="GrappleController" type="Node" parent="." node_paths=PackedStringArray("ray", "rope")]
+script = ExtResource("3_ves0u")
+ray = NodePath("../Head/Camera3D/RayCast3D")
+rope = NodePath("../Head/Camera3D/Rope")

@@ -33,19 +33,24 @@ var line_transition_speed := 3.0
 
 var wish_dir := Vector3.ZERO
 
-func get_move_speed() -> float:
-	var delta := get_physics_process_delta_time()
+func get_move_speed(delta) -> float:
+	var input_dir = Input.get_vector("left", "right", "up", "down")
 
 	if Input.is_action_pressed("sprint"):
-		# If we're starting to sprint from walk speed, snap immediately to base sprint speed
-		if current_sprint_speed < sprint_speed:
-			current_sprint_speed = sprint_speed
+		if input_dir.length() > 0:
+			# Accelerate toward sprint cap
+			if current_sprint_speed < sprint_speed:
+				current_sprint_speed = sprint_speed
+			else:
+				current_sprint_speed = min(current_sprint_speed + sprint_build_up * delta, sprint_speed_cap)
 		else:
-			current_sprint_speed = min(current_sprint_speed + sprint_build_up * delta, sprint_speed_cap)
-		return current_sprint_speed
+			# Decelerate toward base sprint speed if not moving
+			if current_sprint_speed > sprint_speed:
+				current_sprint_speed = max(current_sprint_speed - sprint_build_up * delta, sprint_speed)
 	else:
 		current_sprint_speed = walk_speed
-		return walk_speed
+
+	return current_sprint_speed
 
 func _ready():
 	## hide world model in fpv
@@ -92,20 +97,32 @@ func _handle_air_physics(delta) -> void:
 		self.velocity += accel_speed * wish_dir
 
 func _handle_ground_physics(delta) -> void:
-	## fancy css style ground friction
 	var cur_speed_in_wish_dir = self.velocity.dot(wish_dir)
-	var add_speed_till_cap = get_move_speed() - cur_speed_in_wish_dir
+	var move_speed = get_move_speed(delta)
+	var add_speed_till_cap = move_speed - cur_speed_in_wish_dir
+
 	if add_speed_till_cap > 0:
-		var accel_speed = ground_accel * delta * get_move_speed()
+		var accel_speed = ground_accel * delta * move_speed
 		accel_speed = min(accel_speed, add_speed_till_cap)
 		self.velocity += accel_speed * wish_dir
+
+	# Modify friction based on input
+	var input_dir = Input.get_vector("left", "right", "up", "down")
+	var applied_friction = ground_friction
+
+	if Input.is_action_pressed("sprint") and input_dir.length() == 0:
+		# Reduce friction to allow slow deceleration while sprinting and not pressing movement
+		applied_friction *= 0.1  # lower friction = longer slide
+
 	var control = max(self.velocity.length(), ground_decel)
-	var drop = control * ground_friction * delta
+	var drop = control * applied_friction * delta
 	var new_speed = max(self.velocity.length() - drop, 0.0)
+
 	if self.velocity.length() > 0:
 		new_speed /= self.velocity.length()
+
 	self.velocity *= new_speed
-	
+
 	_headbob_effect(delta)
 
 func _physics_process(delta):
