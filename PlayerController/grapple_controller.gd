@@ -19,7 +19,6 @@ func _physics_process(delta: float) -> void:
 		retract()
 	if launched:
 		handle_grapple(delta)
-		
 	update_rope()
 
 func launch():
@@ -41,9 +40,7 @@ func handle_grapple(delta: float):
 		var spring_force = target_dir * spring_force_magnitude
 		var vel_dot = player.velocity.dot(target_dir)
 		var damping = -damping * vel_dot * target_dir
-		
 		force = spring_force + damping
-		
 	player.velocity+= force * delta
 
 func update_rope():

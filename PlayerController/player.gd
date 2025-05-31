@@ -14,6 +14,25 @@ var headbob_time := 0.0
 @export var ground_decel := 10.0
 @export var ground_friction := 6.0
 
+@export var wallrun_node_path: NodePath
+@onready var wallrun_node = get_node(wallrun_node_path)
+
+var can_wallrun = false
+var wallrun_delay = 0.2
+@onready var wallrun_delay_default = wallrun_delay
+
+var is_wallrunning = false
+
+@export var wallrun_angle : float = 15
+var wallrun_current_angle = 0
+var side = ""
+
+var is_wallrun_jumping = false
+var wall_jump_dir = Vector3.ZERO
+@export var wall_jump_horizontal_power : float = 1.5
+@export var wall_jump_vertical_power : float = 0.75
+@export_range(0.0, 1.0) var wall_jump_factor: float = 0.4
+
 var current_sprint_speed := 15.0
 @export var sprint_speed_cap := 25.0
 @export var sprint_build_up := 1.0
@@ -80,7 +99,9 @@ func _headbob_effect(delta):
 		0
 	)
 
+
 func _process(delta):
+	## jitter fix
 	pass
 
 func _handle_air_physics(delta) -> void:
@@ -125,6 +146,106 @@ func _handle_ground_physics(delta) -> void:
 
 	_headbob_effect(delta)
 
+## wallrun stuff
+func process_vertical_movement(delta):
+	if is_on_floor():
+		can_wallrun = false
+		is_wallrunning = false
+		is_wallrun_jumping = false
+		wallrun_delay = wallrun_delay_default
+	else:
+		wallrun_delay = clamp(wallrun_delay - delta, 0, wallrun_delay_default)
+		if wallrun_delay == 0:
+			can_wallrun = true
+			
+	## wallrun jump
+	if Input.is_action_just_pressed("jump") and is_wallrunning:
+		can_wallrun	= false
+		is_wallrunning = false
+		
+		velocity.y = jump_velocity * wall_jump_vertical_power
+		is_wallrun_jumping	= true
+		
+		## figure out jump direction
+		if side == "LEFT":
+			wall_jump_dir = global_transform.basis.x * wall_jump_horizontal_power
+		elif side == "RIGHT":
+			wall_jump_dir = -global_transform.basis.x * wall_jump_horizontal_power
+			
+		wall_jump_dir *= wall_jump_factor
+		
+	if is_wallrun_jumping:
+		# Preserve wall_jump_dir during jump to avoid jitter
+		wish_dir = wall_jump_dir.normalized()
+		return
+
+func process_wallrun():
+	if not can_wallrun:
+		return
+
+	if Input.is_action_pressed("sprint"):
+		for i in range(get_slide_collision_count()):
+			var collision = get_slide_collision(i)
+			if collision and collision.get_normal().y == 0:  # Vertical wall
+				var normal = collision.get_normal()
+
+				var wallrun_dir = Vector3.UP.cross(normal)
+				var player_view_dir = -%Camera3D.global_transform.basis.z
+				var dot = wallrun_dir.dot(player_view_dir)
+				if dot < 0:
+					wallrun_dir = -wallrun_dir
+
+				#var wallrun_axis_2d = Vector2(wallrun_dir.x, wallrun_dir.z)
+				#var view_dir_2d = Vector2(player_view_dir.x, player_view_dir.z)
+				#var angle = wallrun_axis_2d.angle_to(view_dir_2d)
+#
+				#angle = rad_to_deg(angle)
+				#if dot < 0:
+					#angle = -angle
+				#
+				#if angle > 85:
+					#is_wallrunning = false
+					#return
+
+				wallrun_dir += -normal * 0.01
+				is_wallrunning = true
+				
+				side = get_side(collision.get_position())
+				
+				velocity.y = -0.01
+				wish_dir = wallrun_dir
+				return  # Start wallrun, exit loop
+	is_wallrunning = false
+
+func  process_wallrun_rotation(delta):
+	if is_wallrunning:
+		if side == "RIGHT":
+			wallrun_current_angle += delta * 60
+			wallrun_current_angle = clamp(wallrun_current_angle, -wallrun_angle, wallrun_angle)
+		elif side == "LEFT":
+			wallrun_current_angle -= delta * 60
+			wallrun_current_angle = clamp(wallrun_current_angle, -wallrun_angle, wallrun_angle)
+			
+	else:
+		if wallrun_current_angle > 0:
+			wallrun_current_angle -= delta * 40
+			wallrun_current_angle = max(0, wallrun_current_angle)
+		elif wallrun_current_angle < 0:
+			wallrun_current_angle += delta * 40
+			wallrun_current_angle = min(wallrun_current_angle, 0)
+			
+	wallrun_node.rotation_degrees = Vector3(0, 0, 1) * wallrun_current_angle
+	
+func get_side(point):
+	point = to_local(point)
+	
+	if point.x > 0:
+		return "RIGHT"
+	elif point.x < 0:
+		return "LEFT"
+	else:
+		return "CENTER"
+
 func _physics_process(delta):
 	## handle fov and speedlines at high speeds
 	if velocity.length() > 18:
@@ -150,7 +271,9 @@ func _physics_process(delta):
 
 	var input_dir = Input.get_vector("left", "right", "up", "down").normalized()
 	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
-
+	
+	process_vertical_movement(delta)
+	
 	if is_on_floor():
 		if Input.is_action_just_pressed("jump") or (auto_bhop and Input.is_action_pressed("jump")):
 			self.velocity.y = jump_velocity
@@ -159,3 +282,5 @@ func _physics_process(delta):
 		_handle_air_physics(delta)
 		
 	move_and_slide()
+	process_wallrun()
+	process_wallrun_rotation(delta)

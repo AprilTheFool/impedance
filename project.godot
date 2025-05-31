@@ -15,11 +15,6 @@ run/main_scene="uid://cbnfuk3urcqsf"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
-[debug]
-
-settings/stdout/print_fps=true
-settings/stdout/print_gpu_profile=true
-
 [display]
 
 window/vsync/vsync_mode=2
@@ -32,6 +27,10 @@ project/assembly_name="impedance"
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/interpolated_camera_3d/plugin.cfg")
 
 [input]
 
@@ -74,6 +73,7 @@ grapple={
 [physics]
 
 3d/default_gravity=12.0
+common/physics_interpolation=true
 
 [rendering]
 

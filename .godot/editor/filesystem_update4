@@ -3,3 +3,5 @@ res://PlayerController/vfx/SpeedLines.gdshader
 res://test_scene.tscn
 res://PlayerController/crosshair.tscn
 res://PlayerController/rope.tscn
+res://PlayerController/grapple_controller.gd
+res://PlayerController/player.gd

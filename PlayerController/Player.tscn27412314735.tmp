@@ -29,7 +29,6 @@ shader_parameter/mask_edge = 0.75
 shader_parameter/animation_speed = 19.136
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
-physics_interpolation_mode = 1
 script = ExtResource("1_g1nwm")
 wallrun_node_path = NodePath("Head/Wallrun")
 
@@ -46,15 +45,12 @@ mesh = SubResource("CapsuleMesh_c4fll")
 
 [node name="Head" type="Node3D" parent="."]
 unique_name_in_owner = true
-physics_interpolation_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79, 0)
 
 [node name="Wallrun" type="Node3D" parent="Head"]
-physics_interpolation_mode = 1
 
 [node name="Camera3D" type="Camera3D" parent="Head/Wallrun"]
 unique_name_in_owner = true
-physics_interpolation_mode = 1
 fov = 98.0
 
 [node name="RayCast3D" type="RayCast3D" parent="Head/Wallrun/Camera3D"]
